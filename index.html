@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body style="width: 100%; padding: 0">
+    <header
+      class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom"
+      style="padding: 0 40px"
+    >
+      <div class="col-md-3 mb-2 mb-md-0">
+        <a
+          href="/"
+          class="d-inline-flex link-body-emphasis text-decoration-none"
+        >
+          <svg
+            class="bi"
+            width="40"
+            height="32"
+            role="img"
+            aria-label="Bootstrap"
+          >
+            <use xlink:href="#bootstrap"></use>
+          </svg>
+        </a>
+      </div>
+
+      <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
+        <li><a href="#" class="nav-link px-2 link-secondary">Comprar</a></li>
+        <li><a href="#" class="nav-link px-2">Vender</a></li>
+        <li><a href="#" class="nav-link px-2">Meus Anuncios</a></li>
+        <li><a href="#" class="nav-link px-2">Sobre</a></li>
+      </ul>
+
+      <div class="col-md-3 text-end">
+        <button type="button" class="btn btn-outline-primary me-2">
+          Login
+        </button>
+        <button type="button" class="btn btn-primary">Cadastro</button>
+      </div>
+    </header>
+    <div
+      class="d-flex flex-column flex-shrink-0 p-3 text-bg-dark"
+      style="width: 320px"
+    >
+      <a
+        href="/"
+        class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none"
+      >
+        <svg class="bi pe-none me-2" width="40" height="32">
+          <use xlink:href="#bootstrap"></use>
+        </svg>
+        <span class="fs-4">Filtros</span>
+      </a>
+      <hr />
+      <div class="mb-3">
+        <label for="localizacao" class="form-label">Localização</label>
+        <br />
+        <select class="form-select" name="localizacao" id="localizacao">
+          <option value="">Escolha uma cidade</option>
+          <option value="joinville">Joinville</option>
+          <option value="florianopolis">Florianopolis</option>
+          <option value="blumenau">Blumenau</option>
+        </select>
+      </div>
+      <div class="image-grid">
+        <label>
+          <input
+            type="radio"
+            name="option"
+            value="chevrolet"
+            onchange="updateImage('chevrolet')"
+          />
+          <img src="./src/img/chevrolet.png" alt="Chevrolet" />
+        </label>
+
+        <label>
+          <input
+            type="radio"
+            name="option"
+            value="fiat"
+            onchange="updateImage('fiat')"
+          />
+          <img src="./src/img/fiat.png" alt="Option 2" />
+        </label>
+
+        <label>
+          <input
+            type="radio"
+            name="option"
+            value="ford"
+            onchange="updateImage('ford')"
+          />
+          <img src="./src/img/ford.png" alt="Ford" />
+        </label>
+        <label>
+          <input
+            type="radio"
+            name="option"
+            value="honda"
+            onchange="updateImage('honda')"
+          />
+          <img src="./src/img/honda.png" alt="Honda" />
+        </label>
+        <label>
+          <input
+            type="radio"
+            name="option"
+            value="hyundai"
+            onchange="updateImage('hyundai')"
+          />
+          <img src="./src/img/hyundai.png" alt="Hyundai" />
+        </label>
+        <label>
+          <input
+            type="radio"
+            name="option"
+            value="mitsubishi"
+            onchange="updateImage('mitsubishi')"
+          />
+          <img src="./src/img/mitsubishi.png" alt="Mitsubishi" />
+        </label>
+        <label>
+          <input
+            type="radio"
+            name="option"
+            value="renault"
+            onchange="updateImage('renault')"
+          />
+          <img src="./src/img/renault.png" alt="Renault" />
+        </label>
+        <label>
+          <input
+            type="radio"
+            name="option"
+            value="toyota"
+            onchange="updateImage('toyota')"
+          />
+          <img src="./src/img/toyota.png" alt="Toyota" />
+        </label>
+        <label>
+          <input
+            type="radio"
+            name="option"
+            value="volkswagen"
+            onchange="updateImage('volkswagen')"
+          />
+          <img src="./src/img/volkswagen.png" alt="Volkswagen" />
+        </label>
+      </div>
+      <br />
+      <label for="ano-carro" class="form-label">Ano</label>
+      <input
+        type="number"
+        id="ano-carro"
+        min="1980"
+        max="2024"
+        step="1"
+        value="2023"
+        class="form-control"
+      />
+      <br />
+      <div class="form-group">
+        <label for="price">Valor</label>
+
+        <div class="price">80000</div>
+        <input
+          type="range"
+          class="custom-range"
+          min="1000"
+          max="1000000"
+          step="1000"
+          id="customRange3"
+          name="Price"
+          value="80000"
+          style="width: 100%"
+        />
+      </div>
+      <br />
+      <div class="mb-3">
+        <label for="quilometragem" class="form-label">Quilometragem</label>
+        <br />
+        <select class="form-select" name="quilometragem" id="quilometragem">
+          <option value="">Escolha a quilometragem</option>
+          <option value="zero">0km</option>
+          <option value="10000">Até 10.000km</option>
+          <option value="25000">Até 25.000km</option>
+          <option value="50000">Até 50.000km</option>
+          <option value="100000">Até 100.000km</option>
+        </select>
+      </div>
+      <div class="form-check">
+        <input
+          class="form-check-input"
+          type="radio"
+          name="flexRadioDefault"
+          id="flexRadioDefault1"
+        />
+        <label class="form-check-label" for="flexRadioDefault1">
+          Default radio
+        </label>
+      </div>
+      <div class="form-check">
+        <input
+          class="form-check-input"
+          type="radio"
+          name="exampleRadios"
+          id="exampleRadios1"
+          value="option1"
+          checked
+        />
+        <label class="form-check-label" for="exampleRadios1">
+          Default radio
+        </label>
+      </div>
+      <div class="form-check">
+        <input
+          class="form-check-input"
+          type="radio"
+          name="exampleRadios"
+          id="exampleRadios2"
+          value="option2"
+        />
+        <label class="form-check-label" for="exampleRadios2">
+          Second default radio
+        </label>
+      </div>
+      <div class="form-check">
+        <input
+          class="form-check-input"
+          type="radio"
+          name="exampleRadios"
+          id="exampleRadios3"
+          value="option3"
+          disabled
+        />
+        <label class="form-check-label" for="exampleRadios3">
+          Disabled radio
+        </label>
+      </div>
+    </div>
+    <script>
+      function updateImage(option) {
+        // You can perform additional actions here when a radio option is selected
+        // For now, let's just log the selected option
+        console.log('Selected Option:', option)
+      }
+    </script>
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+      integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+      integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
+      crossorigin="anonymous"
+    ></script>
+    <script>
+      $(document).ready(function () {
+        $('#customRange3').on('input', function () {
+          v = $('#customRange3').val()
+          console.log(v)
+          $('div.price').text(v)
+        })
+      })
+    </script>
+  </body>
+</html>
