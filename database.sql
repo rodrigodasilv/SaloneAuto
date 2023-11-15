@@ -79,6 +79,7 @@ ENGINE = InnoDB;
 
 CREATE TABLE IF NOT EXISTS anuncios (
   id_anuncios INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  preco_anuncios DECIMAL(8,2) NOT NULL,
   vendido_anuncios BIT NOT NULL DEFAULT 0,
   cidades_id INT UNSIGNED NOT NULL,
   usuarios_id INT UNSIGNED NOT NULL,
