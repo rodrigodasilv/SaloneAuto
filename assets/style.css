@@ -31,29 +31,62 @@
   font-size: 14px;
   /* Additional styling for the text */
 }
+
+.image-grid label:hover {
+  filter: brightness(0.8); /* Darken the image on hover */
+}
+
+.image-grid label:hover img {
+  filter: brightness(1.2); /* Adjust brightness for the image on hover */
+}
+
+.image-grid input[type='radio']:checked + label {
+  /* Styles for the label when the radio button is selected */
+  filter: brightness(0.8);
+  border: 2px solid #007bff; /* Add a border to indicate selection */
+}
+
+.image-grid input[type='radio']:checked + label img {
+  /* Styles for the image when the radio button is selected */
+  filter: brightness(1.2);
+  /* Add additional effects of your choice, for example, a box shadow */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
 .price::before {
   content: 'R$ ';
 }
 
-a, p, h1, h2, h3, h4, h5, span, select, input, label, button, option{
+a,
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+span,
+select,
+input,
+label,
+button,
+option {
   font-family: 'Poppins', serif !important;
 }
 
-a{
-  color: RGBA(var(--bs-secondary-rgb),var(--bs-link-opacity,1)) !important;
+a {
+  color: RGBA(var(--bs-secondary-rgb), var(--bs-link-opacity, 1)) !important;
 }
 
-.link-secondary{
+.link-secondary {
   color: white !important;
 }
 
-.btn-outline-primary{
+.btn-outline-primary {
   --bs-btn-color: white;
   --bs-btn-border-color: white;
   --bs-btn-hover-color: black;
   --bs-btn-hover-bg: white;
   --bs-btn-hover-border-color: white;
-  --bs-btn-focus-shadow-rgb: 13,110,253;
+  --bs-btn-focus-shadow-rgb: 13, 110, 253;
   --bs-btn-active-color: #fff;
   --bs-btn-active-bg: white;
   --bs-btn-active-border-color: white;
@@ -63,14 +96,20 @@ a{
   --bs-btn-disabled-border-color: white;
 }
 
-.btn-primary{
+.btn-primary {
   --bs-btn-color: black;
   --bs-btn-bg: white;
   --bs-btn-border-color: white;
   --bs-btn-hover-color: black;
-  --bs-btn-hover-bg: RGBA(var(--bs-secondary-rgb),var(--bs-link-opacity,1)) !important;
-  --bs-btn-hover-border-color: RGBA(var(--bs-secondary-rgb),var(--bs-link-opacity,1)) !important;
-  --bs-btn-focus-shadow-rgb: 49,132,253;
+  --bs-btn-hover-bg: RGBA(
+    var(--bs-secondary-rgb),
+    var(--bs-link-opacity, 1)
+  ) !important;
+  --bs-btn-hover-border-color: RGBA(
+    var(--bs-secondary-rgb),
+    var(--bs-link-opacity, 1)
+  ) !important;
+  --bs-btn-focus-shadow-rgb: 49, 132, 253;
   --bs-btn-active-color: black;
   --bs-btn-active-bg: white;
   --bs-btn-active-border-color: white;
@@ -78,4 +117,48 @@ a{
   --bs-btn-disabled-color: #fff;
   --bs-btn-disabled-bg: white;
   --bs-btn-disabled-border-color: white;
+}
+
+.container-main {
+  display: flex;
+}
+
+.container-carros {
+  padding: 20px;
+}
+
+.card-deck .card {
+  margin-right: 20px; /* Adjust as needed */
+  margin-bottom: 20px; /* Adjust as needed */
+  width: 18%;
+}
+
+/* Reset margin for the last card in each row */
+.card-deck .card:nth-child(5n) {
+  margin-right: 0;
+}
+
+.card-botao {
+  background-color: gray;
+  border-radius: 5px;
+  padding: 5px;
+  width: 100%;
+}
+
+.vender form button {
+  background-color: gray;
+  padding: 10px;
+  border-radius: 5px;
+  color: white;
+  width: 80%;
+}
+
+.vertical-center {
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+  right: 0;
+  padding-right: 60px;
 }
