@@ -31,7 +31,7 @@
         </div>
     </header>
     <div class="container" style="padding-top: 2rem">
-        <h3>Cadastre seu carro.</h3>
+        <h3>Edite seu anúncio.</h3>
         <div class="col-12">
                 <?php if (isset($_GET['mensagem'])) { ?>
                     <div class="alert alert-warning alert-dismissible fade show" role="alert">
@@ -42,7 +42,7 @@
                     </div>
                 <?php } ?>
             </div>
-        <form action="venderAct.php" method="post" enctype="multipart/form-data">
+        <form action="anuncioEditAct.php" method="post" enctype="multipart/form-data">
             <label for="marcaSelect">Selecione a marca do carro</label><br>
             <script>
                 function addMarca(){
@@ -61,10 +61,21 @@
                     $marcaID = 0;
                 }
                 include_once('./Utilities/database_connection.php');
+                $query = "select * from anuncios a join versoes v on v.id_versoes = a.versoes_id join modelos m on a.modelos_id = m.id_modelos
+                join cores c on c.id_cores = a.cores_id join cidades ci on ci.id_cidades = a.cidades_id
+                join marcas ma on ma.id_marcas = m.marcas_id and a.vendido_anuncios=0 and a.id_anuncios=". $_GET['anuncio'];
+                $stm_sql = $banco->prepare($query);
+                $stm_sql->execute();
+                $anuncio = $stm_sql->fetch(PDO::FETCH_ASSOC);
+                if($marcaID==0 && isset($anuncio['marcas_id'])){
+                    $marcaID = $anuncio['marcas_id'];
+                }
+
                 $query = "SELECT * FROM marcas m where (". $marcaID ." = 0) or (m.id_marcas=". $marcaID .")
                           union
                           SELECT * from marcas m where (". $marcaID ." <> 0) or (m.id_marcas<>". $marcaID .")";
                 $stm_sql = $banco->prepare($query);
+                var_dump($query);
                 $stm_sql->execute();
                 $marcas = $stm_sql->fetchAll(PDO::FETCH_ASSOC);
                 foreach ($marcas as $marca) {
@@ -72,6 +83,7 @@
                 }
                 ?>
             </select>
+            <?php echo '<input type="hidden" name="anuncio" id="anuncio" value="'.$anuncio['id_anuncios'].'">' ?>
             <label for="modeloSelect">Selecione o modelo do carro</label><br>
             <select class="form-select" id="modeloSelect" name="modelo" onchange="addModelo()">
                 <?php
@@ -79,6 +91,9 @@
                     $modeloID = $_GET['modelos_id'];
                 }else{
                     $modeloID = 0;
+                }
+                if($modeloID==0 && isset($anuncio['modelos_id'])){
+                    $modeloID = $anuncio['modelos_id'];
                 }
                 $query = "SELECT * FROM modelos m where (". $marcaID ." = 0) or (m.marcas_id=". $marcaID .") and (". $modeloID ." = 0) or (m.id_modelos=". $modeloID .")
                           union
@@ -106,9 +121,10 @@
             <label for="localizacao">Selecione a cor do carro</label>
             <br />
             <select class="form-select" id="corSelect" name="cor">
-                <option value="">Escolha uma cor</option>
                 <?php
-                $query = "SELECT * FROM cores";
+                $query = "SELECT * FROM cores c where (". $anuncio['cores_id'] ." = 0) or (c.id_cores=". $anuncio['cores_id'] .")
+                union
+                SELECT * FROM cores c where (". $anuncio['cores_id'] ." <> 0) or (c.id_cores<>". $anuncio['cores_id'] .")";
                 $stm_sql = $banco->prepare($query);
                 $stm_sql->execute();
                 $cores = $stm_sql->fetchAll(PDO::FETCH_ASSOC);
@@ -120,9 +136,10 @@
             <label for="localizacao">Selecione sua localização</label>
             <br />
             <select class="form-select" name="localizacao" id="localizacao">
-                <option value="">Escolha uma cidade</option>
                 <?php
-                $query = "SELECT * FROM cidades";
+                $query = "SELECT * FROM cidades c where (". $anuncio['cidades_id'] ." = 0) or (c.id_cidades=". $anuncio['cidades_id'] .")
+                union
+                SELECT * FROM cidades c where (". $anuncio['cidades_id'] ." <> 0) or (c.id_cidades<>". $anuncio['cidades_id'] .")";
                 $stm_sql = $banco->prepare($query);
                 $stm_sql->execute();
                 $cidades = $stm_sql->fetchAll(PDO::FETCH_ASSOC);
@@ -135,35 +152,24 @@
                 <div class="col-4">
                     <div class="form-group">
                         <label for="">Preço</label>
-                        <input class="form-control" type="decimal" name="price" id="price" placeholder="100000">
+                        <input class="form-control" type="decimal" value="<?php echo $anuncio['preco_anuncios']?>" name="price" id="price" placeholder="100000">
                     </div>
                 </div>
                 <div class="col-4">
                     <div class="form-group">
                         <label for="ultRev">Ano da última revisão:</label>
-                        <input class="form-control" id="ultRev" name="ultRev" type="number" placeholder="<?php echo date('Y') ?>">
+                        <input class="form-control" id="ultRev" value="<?php echo $anuncio['ult_revisao']?>" name="ultRev" type="number" placeholder="<?php echo date('Y') ?>">
                     </div>
                 </div>
                 <div class="col-4">
                     <div class="form-group">
                         <label for="km">Quilometragem:</label>
-                        <input class="form-control" id="km" name="km" type="number" placeholder="50000">
+                        <input class="form-control" id="km" name="km" type="number" value="<?php echo $anuncio['km_anuncios']?>" placeholder="50000">
                     </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-12">
-                    <div class="form-group">
-                        <label for="foto">Escolha uma foto do seu carro</label><br>
-                        <input type="file" class="form-control-file" id="foto" name="foto">
-                    </div>
-                </div>
-            </div>
-            
-
-
             <div class="text-center" style="padding-top: 2rem; padding-bottom: 2rem">
-                <button type="submit" class="btn btn-outline-primary text-bg-dark">Cadastrar</button>
+                <button type="submit" class="btn btn-outline-primary text-bg-dark">Atualizar</button>
             </div>
         </form>
     </div>

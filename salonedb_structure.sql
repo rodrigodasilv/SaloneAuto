@@ -100,11 +100,13 @@
     cidades_id INT UNSIGNED NOT NULL,
     usuarios_id INT UNSIGNED NOT NULL,
     modelos_id INT UNSIGNED NOT NULL,
+    versoes_id INT UNSIGNED NOT NULL,
     cores_id INT UNSIGNED NOT NULL,
     PRIMARY KEY (id_anuncios, cidades_id, usuarios_id, modelos_id, cores_id),
     INDEX fk_anuncios_cidades1_idx (cidades_id ASC),
     INDEX fk_anuncios_usuarios1_idx (usuarios_id ASC),
     INDEX fk_anuncios_modelos1_idx (modelos_id ASC),
+    INDEX fk_anuncios_versoes1_idx (versoes_id ASC),
     INDEX fk_anuncios_cores1_idx (cores_id ASC),
     CONSTRAINT fk_anuncios_cidades1
       FOREIGN KEY (cidades_id)
@@ -119,6 +121,11 @@
     CONSTRAINT fk_anuncios_modelos1
       FOREIGN KEY (modelos_id)
       REFERENCES saloneDB.modelos (id_modelos)
+      ON DELETE NO ACTION
+      ON UPDATE NO ACTION,
+    CONSTRAINT fk_anuncios_versoes1
+      FOREIGN KEY (versoes_id)
+      REFERENCES saloneDB.versoes (id_versoes)
       ON DELETE NO ACTION
       ON UPDATE NO ACTION,
     CONSTRAINT fk_anuncios_cores1

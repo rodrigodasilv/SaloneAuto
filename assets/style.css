@@ -72,6 +72,10 @@ option {
   font-family: 'Poppins', serif !important;
 }
 
+.logo{
+  height: 4rem;
+}
+
 a {
   color: RGBA(var(--bs-secondary-rgb), var(--bs-link-opacity, 1)) !important;
 }
@@ -139,14 +143,13 @@ a {
 }
 
 .card-botao {
-  background-color: gray;
+  background-color: RGBA(var(--bs-dark-rgb),var(--bs-bg-opacity,1)) !important;
   border-radius: 5px;
   padding: 5px;
   width: 100%;
 }
 
 .vender form button {
-  background-color: gray;
   padding: 10px;
   border-radius: 5px;
   color: white;
@@ -161,4 +164,8 @@ a {
   transform: translateY(-50%);
   right: 0;
   padding-right: 60px;
+}
+
+form label{
+  padding-top: 1rem;
 }

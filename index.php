@@ -15,24 +15,33 @@
 
 <body style="width: 100%; padding: 0">
   <header class="text-bg-dark d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 border-bottom" style="padding: 0 40px; border-bottom: 0 !important;">
-    <div class="col-md-3 mb-2 mb-md-0">
+    <div class="col-md-3 mb-md-0 text-center" style="padding-right: 4rem">
       <a href="index.php" class="d-inline-flex link-body-emphasis text-decoration-none">
-        <img src="./src/img/logo-placeholder.png" alt="">
-
+        <img src="./src/img/SaloneAuto2.png" class="img-fluid logo" alt="">
       </a>
     </div>
 
     <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
       <li><a href="index.php" class="nav-link px-2 link-secondary">Comprar</a></li>
-      <li><a href="vender.php" class="nav-link px-2">Vender</a></li>
-      <li><a href="anuncios.php" class="nav-link px-2">Meus Anuncios</a></li>
+      <?php
+        session_start();
+        if(isset($_SESSION['user'])){
+          echo '<li><a href="vender.php" class="nav-link px-2">Vender</a></li>';
+          echo '<li><a href="anuncios.php" class="nav-link px-2">Meus Anuncios</a></li>';
+        }
+      ?>
       <li><a href="sobre.php" class="nav-link px-2">Sobre</a></li>
     </ul>
 
     <div class="col-md-3 text-end">
-      <a href="login.php"><button type="button" class="btn btn-outline-primary me-2">Login</button></a>
-
-      <a href="cadastro.php"><button type="button" class="btn btn-primary">Cadastro</button></a>
+            <?php 
+            if(isset($_SESSION['user'])){
+                echo '<a href="logout.php"><button type="button" class="btn btn-outline-primary me-2">Sair</button></a>';
+            }else{
+                echo '<a href="login.php"><button type="button" class="btn btn-outline-primary me-2">Login</button></a>';
+                echo '<a href="cadastro.php"><button type="button" class="btn btn-primary">Cadastro</button></a>';
+            }
+            ?>
     </div>
   </header>
   <div class="container-main">
@@ -101,222 +110,34 @@
         </select>
       </div>
       <label class="form-label">Cor</label>
-      <div class="form-check">
-        <input type="checkbox" class="form-check-input" id="cor-branco" name="branco" value="branco">
-        <label class="form-check-label" for="cor-branco">Branco</label>
-      </div>
-      <div class="form-check">
-        <input type="checkbox" class="form-check-input" id="cor-preto" name="preto" value="preto">
-        <label class="form-check-label" for="cor-preto">Preto</label>
-      </div>
-      <div class="form-check">
-        <input type="checkbox" class="form-check-input" id="cor-prata" name="prata" value="prata">
-        <label class="form-check-label" for="cor-prata">Prata</label>
-      </div>
-      <div class="form-check">
-        <input type="checkbox" class="form-check-input" id="cor-vermelho" name="vermelho" value="vermelho">
-        <label class="form-check-label" for="cor-vermelho">Vermelho</label>
-      </div>
-
+      <?php
+      $query = "SELECT * FROM cores";
+        $stm_sql = $banco->prepare($query);
+        $stm_sql->execute();
+        $cores = $stm_sql->fetchAll(PDO::FETCH_ASSOC);
+        foreach ($cores as $cor) {
+          echo '<div class="form-check">
+          <input type="checkbox" class="form-check-input" id="cor-'.$cor['desc_cores'].'" name="'.strtolower($cor['desc_cores']).'" value="'.strtolower($cor['desc_cores']).'">
+          <label class="form-check-label" for="cor-'.$cor['desc_cores'].'">'.$cor['desc_cores'].'</label>
+        </div>';
+        }
+          ?>
     </div>
     <div class="container-carros">
       <h3>Estoque de carros</h3>
       <div class="card-deck-container">
-        <div class="card-deck" style="display: flex; flex-wrap:wrap">
-          <div class="card">
-            <img src="./src/img/sentra.jpg" class="card-img-top" alt="...">
-            <div class="card-body">
-              <h5 class="card-title">Nissan Sentra</h5>
-              <p class="card-text">Some text for Card</p>
-              <p><b>PREÇO</b></p>
-              <div style="display:flex; justify-content: space-between; font-size: 12px">
-                <p>ANO</p>
-                <p>KM</p>
-              </div>
-              <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-                Launch demo modal
-              </button>
-            </div>
-            <p style="font-size: 10px; padding-left: 20px">LOCALIZAÇÃO</p>
-          </div>
-          <div class="card">
-            <img src="./src/img/sentra.jpg" class="card-img-top" alt="...">
-            <div class="card-body">
-              <h5 class="card-title">Nissan Sentra</h5>
-              <p class="card-text">Some text for Card</p>
-              <p><b>PREÇO</b></p>
-              <div style="display:flex; justify-content: space-between; font-size: 12px">
-                <p>ANO</p>
-                <p>KM</p>
-              </div>
-              <button class="card-botao">Ver detalhes</button>
-            </div>
-            <p style="font-size: 10px; padding-left: 20px">LOCALIZAÇÃO</p>
-          </div>
-          <div class="card">
-            <img src="./src/img/sentra.jpg" class="card-img-top" alt="...">
-            <div class="card-body">
-              <h5 class="card-title">Nissan Sentra</h5>
-              <p class="card-text">Some text for Card</p>
-              <p><b>PREÇO</b></p>
-              <div style="display:flex; justify-content: space-between; font-size: 12px">
-                <p>ANO</p>
-                <p>KM</p>
-              </div>
-              <button class="card-botao">Ver detalhes</button>
-            </div>
-            <p style="font-size: 10px; padding-left: 20px">LOCALIZAÇÃO</p>
-          </div>
-          <div class="card">
-            <img src="./src/img/sentra.jpg" class="card-img-top" alt="...">
-            <div class="card-body">
-              <h5 class="card-title">Nissan Sentra</h5>
-              <p class="card-text">Some text for Card</p>
-              <p><b>PREÇO</b></p>
-              <div style="display:flex; justify-content: space-between; font-size: 12px">
-                <p>ANO</p>
-                <p>KM</p>
-              </div>
-              <button class="card-botao">Ver detalhes</button>
-            </div>
-            <p style="font-size: 10px; padding-left: 20px">LOCALIZAÇÃO</p>
-          </div>
-          <div class="card">
-            <img src="./src/img/sentra.jpg" class="card-img-top" alt="...">
-            <div class="card-body">
-              <h5 class="card-title">Nissan Sentra</h5>
-              <p class="card-text">Some text for Card</p>
-              <p><b>PREÇO</b></p>
-              <div style="display:flex; justify-content: space-between; font-size: 12px">
-                <p>ANO</p>
-                <p>KM</p>
-              </div>
-              <button class="card-botao">Ver detalhes</button>
-            </div>
-            <p style="font-size: 10px; padding-left: 20px">LOCALIZAÇÃO</p>
-          </div>
-          <div class="card">
-            <img src="./src/img/sentra.jpg" class="card-img-top" alt="...">
-            <div class="card-body">
-              <h5 class="card-title">Nissan Sentra</h5>
-              <p class="card-text">Some text for Card</p>
-              <p><b>PREÇO</b></p>
-              <div style="display:flex; justify-content: space-between; font-size: 12px">
-                <p>ANO</p>
-                <p>KM</p>
-              </div>
-              <button class="card-botao">Ver detalhes</button>
-            </div>
-            <p style="font-size: 10px; padding-left: 20px">LOCALIZAÇÃO</p>
-          </div>
-          <div class="card">
-            <img src="./src/img/sentra.jpg" class="card-img-top" alt="...">
-            <div class="card-body">
-              <h5 class="card-title">Nissan Sentra</h5>
-              <p class="card-text">Some text for Card</p>
-              <p><b>PREÇO</b></p>
-              <div style="display:flex; justify-content: space-between; font-size: 12px">
-                <p>ANO</p>
-                <p>KM</p>
-              </div>
-              <button class="card-botao">Ver detalhes</button>
-            </div>
-            <p style="font-size: 10px; padding-left: 20px">LOCALIZAÇÃO</p>
-          </div>
-          <div class="card">
-            <img src="./src/img/sentra.jpg" class="card-img-top" alt="...">
-            <div class="card-body">
-              <h5 class="card-title">Nissan Sentra</h5>
-              <p class="card-text">Some text for Card</p>
-              <p><b>PREÇO</b></p>
-              <div style="display:flex; justify-content: space-between; font-size: 12px">
-                <p>ANO</p>
-                <p>KM</p>
-              </div>
-              <button class="card-botao">Ver detalhes</button>
-            </div>
-            <p style="font-size: 10px; padding-left: 20px">LOCALIZAÇÃO</p>
-          </div>
-          <div class="card">
-            <img src="./src/img/sentra.jpg" class="card-img-top" alt="...">
-            <div class="card-body">
-              <h5 class="card-title">Nissan Sentra</h5>
-              <p class="card-text">Some text for Card</p>
-              <p><b>PREÇO</b></p>
-              <div style="display:flex; justify-content: space-between; font-size: 12px">
-                <p>ANO</p>
-                <p>KM</p>
-              </div>
-              <button class="card-botao">Ver detalhes</button>
-            </div>
-            <p style="font-size: 10px; padding-left: 20px">LOCALIZAÇÃO</p>
-          </div>
-          <div class="card">
-            <img src="./src/img/sentra.jpg" class="card-img-top" alt="...">
-            <div class="card-body">
-              <h5 class="card-title">Nissan Sentra</h5>
-              <p class="card-text">Some text for Card</p>
-              <p><b>PREÇO</b></p>
-              <div style="display:flex; justify-content: space-between; font-size: 12px">
-                <p>ANO</p>
-                <p>KM</p>
-              </div>
-              <button class="card-botao">Ver detalhes</button>
-            </div>
-            <p style="font-size: 10px; padding-left: 20px">LOCALIZAÇÃO</p>
-          </div>
-          <div class="card">
-            <img src="./src/img/sentra.jpg" class="card-img-top" alt="...">
-            <div class="card-body">
-              <h5 class="card-title">Nissan Sentra</h5>
-              <p class="card-text">Some text for Card</p>
-              <p><b>PREÇO</b></p>
-              <div style="display:flex; justify-content: space-between; font-size: 12px">
-                <p>ANO</p>
-                <p>KM</p>
-              </div>
-              <button class="card-botao">Ver detalhes</button>
-            </div>
-            <p style="font-size: 10px; padding-left: 20px">LOCALIZAÇÃO</p>
-          </div>
-          <div class="card">
-            <img src="./src/img/sentra.jpg" class="card-img-top" alt="...">
-            <div class="card-body">
-              <h5 class="card-title">Nissan Sentra</h5>
-              <p class="card-text">Some text for Card</p>
-              <p><b>PREÇO</b></p>
-              <div style="display:flex; justify-content: space-between; font-size: 12px">
-                <p>ANO</p>
-                <p>KM</p>
-              </div>
-              <button class="card-botao">Ver detalhes</button>
-            </div>
-            <p style="font-size: 10px; padding-left: 20px">LOCALIZAÇÃO</p>
-          </div>
-          <div class="card">
-            <img src="./src/img/sentra.jpg" class="card-img-top" alt="...">
-            <div class="card-body">
-              <h5 class="card-title">Nissan Sentra</h5>
-              <p class="card-text">Some text for Card</p>
-              <p><b>PREÇO</b></p>
-              <div style="display:flex; justify-content: space-between; font-size: 12px">
-                <p>ANO</p>
-                <p>KM</p>
-              </div>
-              <button class="card-botao">Ver detalhes</button>
-            </div>
-            <p style="font-size: 10px; padding-left: 20px">LOCALIZAÇÃO</p>
-          </div>
-
-
-
-
-
-
-        </div>
-
-
-
+      <div class="card-deck" style="display: flex; flex-wrap:wrap">
+        <?php include('cardAnuncio.php');
+        $query = "select * from anuncios a join versoes v on v.id_versoes = a.versoes_id join modelos m on a.modelos_id = m.id_modelos
+        join cores c on c.id_cores = a.cores_id join cidades ci on ci.id_cidades = a.cidades_id
+        join marcas ma on ma.id_marcas = m.marcas_id and a.vendido_anuncios=0 limit 30";
+        $stm_sql = $banco->prepare($query);
+        $stm_sql->execute();
+        $anuncios = $stm_sql->fetchAll(PDO::FETCH_ASSOC);
+        foreach ($anuncios as $anuncio) {
+          criarCard($anuncio);
+        }
+        ?>
       </div>
     </div>
 
