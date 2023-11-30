@@ -19818,3 +19818,24 @@ INSERT INTO versoes (id_versoes, modelos_id, combustiveis_id, desc_versoes, ano_
 (15873, 5669, 1, '2014-1 - Gasolina', 2014),
 (15874, 5669, 1, '2013-1 - Gasolina', 2013),
 (15875, 5669, 1, '2012-1 - Gasolina', 2012);
+
+INSERT INTO usuarios (id_usuarios, nome_usuarios, email_usuarios, senha_usuarios, cel_usuarios, cpf_usuarios, dat_nasc_usuarios) VALUES
+(1, 'Iago Cláudio Campos', 'iago-campos93@globomail.com', '$2y$10$Si58FR4wBjoHNImqgk9ahug0Lp9y1sh5VsoYBR4bmrwm.0lbBclYm', '47981371055', '85199640950', '2002-01-23 00:00:00'),
+(2, 'Enzo Thales da Mata', 'enzo.damata@gmail.com', '$2y$10$YipUGLqNBe2HVJFKPkFYfuCQ3ccjNKbB0Jk0xWe4n2V0liNiea/1C', '48981308444', '62059814910', '2002-03-23 00:00:00'),
+(3, 'Vicente Edson Assunção', 'vicente_assuncao@bol.br', '$2y$10$U8xvM2pjaiSI.h56qIbWrOoGCa/CYFd7fx5AILZt3mjrxptXD2Er6', '48994975074', '63007899931', '2000-01-15 00:00:00'),
+(4, 'Kauê Viana', 'kaueigorviana@hotmail.com', '$2y$10$RRRUPgzu8.eAER3vnPgsWekktDEfO7hfrRRlqTPIhBoNQDFpnzwTW', '48988706058', '31630555916', '2001-05-23 00:00:00'),
+(5, 'Carlos Martin Rocha', 'carlos_rocha@statusseguros.com.br', '$2y$10$G5I8gRe2ID6ey7bKquTdjerqhYfKiW7xfDXeq.MJFhA4l93H538ba', '48991671316', '84632697966', '1998-08-23 00:00:00'),
+(6, 'Noah André Silva', 'noah_silva@oi.com.br', '$2y$10$47/lKgwnGYFCQ0DO4M9QiO79e7ih4ZgFVoEmI8Kyk.Tcd1llW.gJa', '48984370870', '82973166969', '1998-06-20 00:00:00'),
+(7, 'Kaique Ian Martins', 'kaiquem@gmail.com', '$2y$10$Vob6JYcKqQmzQVFk77BqJOI1aV2j60MN2XOK2dEJixBVMm0RyEyxm', '48981320029', '36123902954', '2002-09-16 00:00:00');
+
+INSERT INTO anuncios (id_anuncios, preco_anuncios, km_anuncios, ult_revisao, vendido_anuncios, cidades_id, usuarios_id, modelos_id, versoes_id, cores_id) VALUES
+(1, 59900.00, 54000, 2023, '0', 4209102, 1, 8744, 6053, 4),
+(2, 38990.00, 108000, 2023, '0', 4204608, 2, 5085, 11800, 2),
+(3, 140490.00, 0, 2023, '0', 4209102, 3, 9633, 14460, 1),
+(4, 434900.00, 0, 2023, '0', 4202008, 4, 10727, 7357, 6),
+(5, 800000.00, 57000, 2023, '0', 4202008, 4, 2287, 11544, 6),
+(6, 114990.00, 54724, 2023, '0', 4209102, 5, 6279, 11968, 1),
+(7, 35000.00, 190000, 2023, '0', 4209102, 5, 2465, 12850, 4),
+(8, 30000.00, 26935, 2023, '0', 4211900, 6, 2012, 9447, 4),
+(9, 93900.00, 17000, 2023, '0', 4209102, 7, 10570, 14695, 2),
+(10, 126.99, 25500, 2023, '0', 4209102, 7, 9151, 12934, 6);

@@ -62,8 +62,11 @@
 
                     for (var i = opcoes.length - 1; i >= 0; i--) {
                         opcoes[i].removeAttribute('hidden');
+                    }
+
+                    for (var i = opcoes.length - 1; i >= 0; i--) {
                         if (opcoes[i].getAttribute('modelo') != document.getElementById('modeloSelect').value) {
-                        opcoes[i].setAttribute('hidden', true);
+                            opcoes[i].setAttribute('hidden', true);
                         }
                     }
                 }

@@ -66,7 +66,7 @@
                     <p class="card-text">'.$anuncio['ano_versoes'].'</p>
                 </div>
                 <p class="card-text">'.$anuncio['desc_versoes'].'</p>
-                <p class="card-text">'.$anuncio['km_anuncios'].'</p>
+                <p class="card-text">'.$anuncio['km_anuncios'].' KM</p>
                 <p class="card-text"><small class="text-muted">'.$anuncio['nome_cidades'].'</small></p>
             </div>
             <div class="vertical-center" style="display: flex; flex-direction: column; gap:20px;">
@@ -95,7 +95,7 @@
                     <p class="card-text">'.$anuncio['ano_versoes'].'</p>
                 </div>
                 <p class="card-text">'.$anuncio['desc_versoes'].'</p>
-                <p class="card-text">'.$anuncio['km_anuncios'].'</p>
+                <p class="card-text">'.$anuncio['km_anuncios'].' KM</p>
                 <p class="card-text"><small class="text-muted">'.$anuncio['nome_cidades'].'</small></p>
             </div>
             <div class="vertical-center" style="display: flex; flex-direction: column; gap:20px;">
