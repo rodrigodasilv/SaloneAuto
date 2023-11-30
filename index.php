@@ -12,7 +12,17 @@
   <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="./assets/style.css?v=<?php echo time(); ?>">
 </head>
+<script>
+  function openModal(id){
+      document.getElementById('modalCarros_'+ id ).style.display = 'block';
+      document.getElementById('overlay_' + id ).style.display = 'block';
+    }
 
+    function closeModal(id){
+      document.getElementById('modalCarros_' + id).style.display = 'none';
+      document.getElementById('overlay_' + id).style.display = 'none';
+    }
+</script>
 <body style="width: 100%; padding: 0">
   <header class="text-bg-dark d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 border-bottom" style="padding: 0 40px; border-bottom: 0 !important;">
     <div class="col-md-3 mb-md-0 text-center" style="padding-right: 4rem">
@@ -46,6 +56,7 @@
   </header>
   <div class="container-main">
     <div class="d-flex flex-column flex-shrink-0 p-3 text-bg-dark" style="width: 320px">
+    <form action="index.php" method="get">
       <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
         <span class="fs-4">Filtros</span>
       </a>
@@ -74,12 +85,12 @@
         $stm_sql->execute();
         $marcas = $stm_sql->fetchAll(PDO::FETCH_ASSOC);
         foreach ($marcas as $marca) {
-          echo '<label>
+          echo '<label marca="'.$marca['id_marcas'].'">
                 <input
                   type="radio"
-                  name="option"
+                  name="marca"
                   value="' . $marca['id_marcas'] . '"
-                  onchange="updateImage(\'' . strtolower($marca['desc_marcas'])  . '\')"
+                  onchange="updateImage(' . $marca['id_marcas']  . ')"
                 />
                 <img src="./src/img/' . $marca['desc_marcas'] . '.png" alt="' . $marca['desc_marcas'] . '" />
               </label>';
@@ -87,14 +98,30 @@
         ?>
       </div>
       <br />
+      <div class="form-group">
+      <label for="modeloSelect" class="form-label">Selecione o modelo do carro</label><br>
+            <select class="form-select" id="modeloSelect" name="modelo">
+                <option value="">Escolha um modelo</option>
+                <?php
+                $query = "SELECT * FROM modelos m";
+                $stm_sql = $banco->prepare($query);
+                $stm_sql->execute();
+                $modelos = $stm_sql->fetchAll(PDO::FETCH_ASSOC);
+                foreach ($modelos as $modelo) {
+                    echo '<option marca="'.$modelo['marcas_id'].'" value="' . $modelo['id_modelos'] . '">' . $modelo['nome_modelos'] . '</option>';
+                }
+                ?>
+            </select>
+      </div>
+            <br>
       <label for="ano-carro" class="form-label">Ano</label>
-      <input type="number" id="ano-carro" min="1980" max="2024" step="1" value="2023" class="form-control" />
+      <input type="number" id="ano-carro" name="ano" min="1980" max="2024" step="1" value="2023" class="form-control" />
       <br />
       <div class="form-group">
         <label for="customRange3">Valor</label>
 
         <div class="price">80000</div>
-        <input type="range" class="custom-range" min="1000" max="1000000" step="1000" id="customRange3" name="Price" value="80000" style="width: 100%" />
+        <input type="range" class="custom-range" min="1000" max="1000000" step="1000" id="customRange3" name="valor" value="80000" style="width: 100%" />
       </div>
       <br />
       <div class="mb-3">
@@ -102,11 +129,13 @@
         <br />
         <select class="form-select" name="quilometragem" id="quilometragem">
           <option value="">Escolha a quilometragem</option>
-          <option value="zero">0km</option>
+          <option value="0">0km</option>
           <option value="10000">Até 10.000km</option>
           <option value="25000">Até 25.000km</option>
           <option value="50000">Até 50.000km</option>
           <option value="100000">Até 100.000km</option>
+          <option value="200000">Até 200.000km</option>
+          <option value="999999">Ao infinito e além</option>
         </select>
       </div>
       <label class="form-label">Cor</label>
@@ -117,11 +146,13 @@
         $cores = $stm_sql->fetchAll(PDO::FETCH_ASSOC);
         foreach ($cores as $cor) {
           echo '<div class="form-check">
-          <input type="checkbox" class="form-check-input" id="cor-'.$cor['desc_cores'].'" name="'.strtolower($cor['desc_cores']).'" value="'.strtolower($cor['desc_cores']).'">
+          <input type="checkbox" class="form-check-input" id="cor-'.$cor['desc_cores'].'" name="cor" value="'.strtolower($cor['desc_cores']).'">
           <label class="form-check-label" for="cor-'.$cor['desc_cores'].'">'.$cor['desc_cores'].'</label>
         </div>';
         }
           ?>
+          <button type="submit" id="submit-filtro" class="btn btn-outline-primary" style="margin-top: 1rem;">Aplicar filtros</button>
+    </form>
     </div>
     <div class="container-carros">
       <h3>Estoque de carros</h3>
@@ -130,7 +161,37 @@
         <?php include('cardAnuncio.php');
         $query = "select * from anuncios a join versoes v on v.id_versoes = a.versoes_id join modelos m on a.modelos_id = m.id_modelos
         join cores c on c.id_cores = a.cores_id join cidades ci on ci.id_cidades = a.cidades_id
-        join marcas ma on ma.id_marcas = m.marcas_id and a.vendido_anuncios=0 limit 30";
+        join marcas ma on ma.id_marcas = m.marcas_id join usuarios u on u.id_usuarios = a.usuarios_id where a.vendido_anuncios=0";
+
+        if(isset($_GET['localizacao']) && !(empty($_GET['localizacao']))){
+          $query = $query . ' and ci.id_cidades = ' . $_GET['localizacao'];
+        }
+
+        if(isset($_GET['marca']) && !(empty($_GET['marca']))){
+          $query = $query . ' and ma.id_marcas = ' . $_GET['marca'];
+        }
+
+        if(isset($_GET['modelo']) && !(empty($_GET['modelo']))){
+          $query = $query . ' and m.id_modelos = ' . $_GET['modelo'];
+        }
+
+        if(isset($_GET['ano']) && !(empty($_GET['ano']))){
+          $query = $query . ' and v.ano_versoes = ' . $_GET['ano'];
+        }
+
+        if(isset($_GET['valor']) && !(empty($_GET['valor']))){
+          $query = $query . ' and a.preco_anuncios <= ' . $_GET['valor'];
+        }
+
+        if(isset($_GET['quilometragem']) && !(empty($_GET['quilometragem']))){
+          $query = $query . " and a.km_anuncios <= " . $_GET['quilometragem'];
+        }
+
+        if(isset($_GET['cor']) && !(empty($_GET['cor']))){
+          $query = $query . " and lower(c.desc_cores) = '" . $_GET['cor'] ."'";
+        }
+
+        $query = $query . ' order by a.preco_anuncios desc limit 30';
         $stm_sql = $banco->prepare($query);
         $stm_sql->execute();
         $anuncios = $stm_sql->fetchAll(PDO::FETCH_ASSOC);
@@ -143,31 +204,22 @@
 
   </div>
   </div>
-  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          ...
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Save changes</button>
-        </div>
-      </div>
-    </div>
-  </div>
+  <?php
+  include_once('modal_anuncio.php');
+    foreach ($anuncios as $anuncio) {
+      criarModal($anuncio);
+    }
+  ?>
 
   <script>
     function updateImage(option) {
-      // You can perform additional actions here when a radio option is selected
-      // For now, let's just log the selected option
-      console.log('Selected Option:', option)
+      var elements = document.querySelectorAll(".selected");
+      elements.forEach(function(element) {
+          element.classList.remove("selected");
+      });
+      document.querySelector('label[marca="' + option + '"]').classList.add('selected');
+
+      atualizaModelos();
     }
   </script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
@@ -181,6 +233,18 @@
         $('div.price').text(v)
       })
     })
+
+    function atualizaModelos(){
+      var lista = document.getElementById('modeloSelect');
+      var opcoes = lista.options;
+
+      for (var i = opcoes.length - 1; i >= 0; i--) {
+        opcoes[i].removeAttribute('hidden');
+        if (opcoes[i].getAttribute('marca') != document.querySelector('input[name="marca"]:checked').value) {
+          opcoes[i].setAttribute('hidden', true);
+        }
+      }
+    }
   </script>
 </body>
 

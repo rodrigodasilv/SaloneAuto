@@ -137,10 +137,11 @@ a {
   width: 18%;
 }
 
-/* Reset margin for the last card in each row */
-.card-deck .card:nth-child(5n) {
+/* Não entendi a necessidade
+.card-deck .card:nth-child(6n) {
   margin-right: 0;
 }
+*/
 
 .card-botao {
   background-color: RGBA(var(--bs-dark-rgb),var(--bs-bg-opacity,1)) !important;
@@ -166,6 +167,60 @@ a {
   padding-right: 60px;
 }
 
-form label{
+form label .form-check-label{
   padding-top: 1rem;
+}
+
+.hidden{
+  display: none;
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  top: 10%;
+  left: 50%;
+  width: 50%;
+  transform: translateX(-50%);
+  max-height: 80vh;
+  overflow: auto;
+}
+
+.modal-content {
+  background-color: #fefefe;
+  margin: 5% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 50%;
+}
+
+.close {
+  color: black;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  position: absolute;
+  right: 6px;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+.overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.7);
+}
+
+
+.selected{
+  border: 0.2rem solid #746d69;
 }

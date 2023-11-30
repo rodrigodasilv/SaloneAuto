@@ -46,24 +46,34 @@
             <label for="marcaSelect">Selecione a marca do carro</label><br>
             <script>
                 function addMarca(){
-                    location.href = '?marcas_id=' + document.getElementById('marcaSelect').value;
+                    var lista = document.getElementById('modeloSelect');
+                    var opcoes = lista.options;
+
+                    for (var i = opcoes.length - 1; i >= 0; i--) {
+                        opcoes[i].removeAttribute('hidden');
+                        if (opcoes[i].getAttribute('marca') != document.getElementById('marcaSelect').value) {
+                        opcoes[i].setAttribute('hidden', true);
+                        }
+                    }
                 }
                 function addModelo(){
-                    location.href = '?marcas_id=' + document.getElementById('marcaSelect').value + '&modelos_id=' + document.getElementById('modeloSelect').value;
+                    var lista = document.getElementById('versaoSelect');
+                    var opcoes = lista.options;
+
+                    for (var i = opcoes.length - 1; i >= 0; i--) {
+                        opcoes[i].removeAttribute('hidden');
+                        if (opcoes[i].getAttribute('modelo') != document.getElementById('modeloSelect').value) {
+                        opcoes[i].setAttribute('hidden', true);
+                        }
+                    }
                 }
             </script>
             <select class="form-select" id="marcaSelect" onchange="addMarca()">
+                <option value="">Selecione a marca!</option>
                 <?php
                 include_once('./validation.php');
-                if (isset($_GET['marcas_id'])){
-                    $marcaID = $_GET['marcas_id'];
-                }else{
-                    $marcaID = 0;
-                }
                 include_once('./Utilities/database_connection.php');
-                $query = "SELECT * FROM marcas m where (". $marcaID ." = 0) or (m.id_marcas=". $marcaID .")
-                          union
-                          SELECT * from marcas m where (". $marcaID ." <> 0) or (m.id_marcas<>". $marcaID .")";
+                $query = "SELECT * FROM marcas m";
                 $stm_sql = $banco->prepare($query);
                 $stm_sql->execute();
                 $marcas = $stm_sql->fetchAll(PDO::FETCH_ASSOC);
@@ -74,32 +84,27 @@
             </select>
             <label for="modeloSelect">Selecione o modelo do carro</label><br>
             <select class="form-select" id="modeloSelect" name="modelo" onchange="addModelo()">
+                <option value="">Selecione o modelo!</option>
                 <?php
-                if (isset($_GET['modelos_id'])){
-                    $modeloID = $_GET['modelos_id'];
-                }else{
-                    $modeloID = 0;
-                }
-                $query = "SELECT * FROM modelos m where (". $marcaID ." = 0) or (m.marcas_id=". $marcaID .") and (". $modeloID ." = 0) or (m.id_modelos=". $modeloID .")
-                          union
-                          SELECT * FROM modelos m where (". $marcaID ." <> 0) or (m.marcas_id<>". $marcaID .") and (". $modeloID ." <> 0) or (m.id_modelos<>". $modeloID .")";
+                $query = "SELECT * FROM modelos m";
                 $stm_sql = $banco->prepare($query);
                 $stm_sql->execute();
                 $modelos = $stm_sql->fetchAll(PDO::FETCH_ASSOC);
                 foreach ($modelos as $modelo) {
-                    echo '<option value="' . $modelo['id_modelos'] . '">' . $modelo['nome_modelos'] . '</option>';
+                    echo '<option marca="'.$modelo['marcas_id'].'" value="' . $modelo['id_modelos'] . '">' . $modelo['nome_modelos'] . '</option>';
                 }
                 ?>
             </select>
             <label for="versaoSelect">Selecione a versão do carro</label><br>
             <select class="form-select" id="versaoSelect" name="versao">
+                <option value="">Selecione a versão!</option>
             <?php
-                $query = "SELECT * FROM versoes v where (". $modeloID ." = 0) or (v.modelos_id=". $modeloID .")";
+                $query = "SELECT * FROM versoes v";
                 $stm_sql = $banco->prepare($query);
                 $stm_sql->execute();
                 $versoes = $stm_sql->fetchAll(PDO::FETCH_ASSOC);
                 foreach ($versoes as $versao) {
-                    echo '<option value="' . $versao['id_versoes'] . '">' . $versao['desc_versoes'] . '</option>';
+                    echo '<option modelo="'.$versao['modelos_id'].'" value="' . $versao['id_versoes'] . '">' . $versao['desc_versoes'] . '</option>';
                 }
                 ?>
             </select>

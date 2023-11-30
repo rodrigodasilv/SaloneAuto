@@ -11,7 +11,17 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./assets/style.css?v=<?php echo time(); ?>">
 </head>
+<script>
+  function openModal(id){
+      document.getElementById('modalCarros_'+ id ).style.display = 'block';
+      document.getElementById('overlay_' + id ).style.display = 'block';
+    }
 
+    function closeModal(id){
+      document.getElementById('modalCarros_' + id).style.display = 'none';
+      document.getElementById('overlay_' + id).style.display = 'none';
+    }
+</script>
 <body class="vender">
     <header class="text-bg-dark d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 border-bottom" style="padding: 0 40px; border-bottom: 0 !important;">
         <div class="col-md-3 mb-md-0 text-center" style="padding-right: 4rem">
@@ -33,13 +43,14 @@
     </header>
     <?php
         include_once('./validation.php');
+        include('modal_anuncio.php');
     ?>
     <div class="container" style="text-align: center; margin-top: 2rem">
         <?php
         include_once('./Utilities/database_connection.php');
         $query = "select * from anuncios a join versoes v on v.id_versoes = a.versoes_id join modelos m on a.modelos_id = m.id_modelos
         join cores c on c.id_cores = a.cores_id join cidades ci on ci.id_cidades = a.cidades_id
-        join marcas ma on ma.id_marcas = m.marcas_id and a.vendido_anuncios=0 and a.usuarios_id=".$_SESSION['user'];
+        join marcas ma on ma.id_marcas = m.marcas_id join usuarios u on u.id_usuarios = a .usuarios_id where a.vendido_anuncios=0 and a.usuarios_id=".$_SESSION['user'];
         $stm_sql = $banco->prepare($query);
         $stm_sql->execute();
         $anuncios = $stm_sql->fetchAll(PDO::FETCH_ASSOC);
@@ -61,14 +72,14 @@
             <div class="vertical-center" style="display: flex; flex-direction: column; gap:20px;">
                 <a href="anuncioConc.php?anuncio='.$anuncio['id_anuncios'].'" class="btn btn-outline-primary text-bg-dark">Marcar anúncio como concluído</a>
                 <a href="anuncioEdit.php?anuncio='.$anuncio['id_anuncios'].'" class="btn btn-outline-primary text-bg-dark">Editar anúncio</a>
-                <a href="anuncioConc.php?anuncio='.$anuncio['id_anuncios'].'" class="btn btn-outline-primary text-bg-dark">Ver anúncio</a>
+                <button onclick="openModal('.$anuncio['id_anuncios'].')" class="btn btn-outline-primary text-bg-dark">Ver anúncio</button>
             </div>
         </div>';
         }
 
         $query = "select * from anuncios a join versoes v on v.id_versoes = a.versoes_id join modelos m on a.modelos_id = m.id_modelos
         join cores c on c.id_cores = a.cores_id join cidades ci on ci.id_cidades = a.cidades_id
-        join marcas ma on ma.id_marcas = m.marcas_id and a.vendido_anuncios=1 and a.usuarios_id=".$_SESSION['user'];
+        join marcas ma on ma.id_marcas = m.marcas_id join usuarios u on u.id_usuarios = a .usuarios_id where a.vendido_anuncios=1 and a.usuarios_id=".$_SESSION['user'];
         $stm_sql = $banco->prepare($query);
         $stm_sql->execute();
         $anuncios = $stm_sql->fetchAll(PDO::FETCH_ASSOC);
@@ -88,9 +99,19 @@
                 <p class="card-text"><small class="text-muted">'.$anuncio['nome_cidades'].'</small></p>
             </div>
             <div class="vertical-center" style="display: flex; flex-direction: column; gap:20px;">
-                <a  href="anuncioConc.php?anuncio='.$anuncio['id_anuncios'].'" class="btn btn-outline-primary text-bg-dark">Ver anúncio</a>
+                <button onclick="openModal('.$anuncio['id_anuncios'].')" class="btn btn-outline-primary text-bg-dark">Ver anúncio</button>
             </div>
         </div>';
+        }
+
+        $query = "select * from anuncios a join versoes v on v.id_versoes = a.versoes_id join modelos m on a.modelos_id = m.id_modelos
+        join cores c on c.id_cores = a.cores_id join cidades ci on ci.id_cidades = a.cidades_id
+        join marcas ma on ma.id_marcas = m.marcas_id join usuarios u on u.id_usuarios = a .usuarios_id where a.usuarios_id=".$_SESSION['user'];
+        $stm_sql = $banco->prepare($query);
+        $stm_sql->execute();
+        $anuncios = $stm_sql->fetchAll(PDO::FETCH_ASSOC);
+        foreach ($anuncios as $anuncio) {
+            criarModal($anuncio);
         }
         ?>
     </div>
