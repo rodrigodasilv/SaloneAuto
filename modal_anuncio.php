@@ -24,7 +24,7 @@ function criarModal($anuncio){
         <p style="color:white; text-align: left !important">'.$anuncio['nome_usuarios'].'</p>
         </div>
         <div class="col-3">
-        <a href="https://api.whatsapp.com/send?phone='.$anuncio['cel_usuarios'].'&text=Opa! Vi seu anúncio do ' . $anuncio['desc_marcas'] . ' ' .  $anuncio['nome_modelos'] . ' no SaloneAuto e estou interessado!" style="color:white !important; text-align: left !important">'.$anuncio['cel_usuarios'].'</a>
+        <a target="_blank" href="https://api.whatsapp.com/send?phone=+55'.$anuncio['cel_usuarios'].'&text=Opa! Vi seu anúncio do ' . $anuncio['desc_marcas'] . ' ' .  $anuncio['nome_modelos'] . ' no SaloneAuto e estou interessado!" style="color:white !important; text-align: left !important">'.$anuncio['cel_usuarios'].'</a>
         </div>
         <div class="col-5">
         <a href="mailto:'.$anuncio['email_usuarios'].'" style="color:white !important; text-align: left !important">'.$anuncio['email_usuarios'].'</a>
