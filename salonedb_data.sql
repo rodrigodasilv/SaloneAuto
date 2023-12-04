@@ -19820,13 +19820,13 @@ INSERT INTO versoes (id_versoes, modelos_id, combustiveis_id, desc_versoes, ano_
 (15875, 5669, 1, '2012-1 - Gasolina', 2012);
 
 INSERT INTO usuarios (id_usuarios, nome_usuarios, email_usuarios, senha_usuarios, cel_usuarios, cpf_usuarios, dat_nasc_usuarios) VALUES
-(1, 'Iago Cláudio Campos', 'iago-campos93@globomail.com', '$2y$10$Si58FR4wBjoHNImqgk9ahug0Lp9y1sh5VsoYBR4bmrwm.0lbBclYm', '47981371055', '85199640950', '2002-01-23 00:00:00'),
-(2, 'Enzo Thales da Mata', 'enzo.damata@gmail.com', '$2y$10$YipUGLqNBe2HVJFKPkFYfuCQ3ccjNKbB0Jk0xWe4n2V0liNiea/1C', '48981308444', '62059814910', '2002-03-23 00:00:00'),
-(3, 'Vicente Edson Assunção', 'vicente_assuncao@bol.br', '$2y$10$U8xvM2pjaiSI.h56qIbWrOoGCa/CYFd7fx5AILZt3mjrxptXD2Er6', '48994975074', '63007899931', '2000-01-15 00:00:00'),
-(4, 'Kauê Viana', 'kaueigorviana@hotmail.com', '$2y$10$RRRUPgzu8.eAER3vnPgsWekktDEfO7hfrRRlqTPIhBoNQDFpnzwTW', '48988706058', '31630555916', '2001-05-23 00:00:00'),
-(5, 'Carlos Martin Rocha', 'carlos_rocha@statusseguros.com.br', '$2y$10$G5I8gRe2ID6ey7bKquTdjerqhYfKiW7xfDXeq.MJFhA4l93H538ba', '48991671316', '84632697966', '1998-08-23 00:00:00'),
-(6, 'Noah André Silva', 'noah_silva@oi.com.br', '$2y$10$47/lKgwnGYFCQ0DO4M9QiO79e7ih4ZgFVoEmI8Kyk.Tcd1llW.gJa', '48984370870', '82973166969', '1998-06-20 00:00:00'),
-(7, 'Kaique Ian Martins', 'kaiquem@gmail.com', '$2y$10$Vob6JYcKqQmzQVFk77BqJOI1aV2j60MN2XOK2dEJixBVMm0RyEyxm', '48981320029', '36123902954', '2002-09-16 00:00:00');
+(1, 'Iago Cláudio Campos', 'iago-campos93@globomail.com', '$2y$10$Si58FR4wBjoHNImqgk9ahug0Lp9y1sh5VsoYBR4bmrwm.0lbBclYm', '(47) 98137-1055', '851.996.409-50', '2002-01-23 00:00:00'),
+(2, 'Enzo Thales da Mata', 'enzo.damata@gmail.com', '$2y$10$YipUGLqNBe2HVJFKPkFYfuCQ3ccjNKbB0Jk0xWe4n2V0liNiea/1C', '(48) 98130-8444', '620.598.149-10', '2002-03-23 00:00:00'),
+(3, 'Vicente Edson Assunção', 'vicente_assuncao@bol.br', '$2y$10$U8xvM2pjaiSI.h56qIbWrOoGCa/CYFd7fx5AILZt3mjrxptXD2Er6', '(48) 99497-5074', '630.078.999-31', '2000-01-15 00:00:00'),
+(4, 'Kauê Viana', 'kaueigorviana@hotmail.com', '$2y$10$RRRUPgzu8.eAER3vnPgsWekktDEfO7hfrRRlqTPIhBoNQDFpnzwTW', '(48) 98870-6058', '316.305.559-16', '2001-05-23 00:00:00'),
+(5, 'Carlos Martin Rocha', 'carlos_rocha@statusseguros.com.br', '$2y$10$G5I8gRe2ID6ey7bKquTdjerqhYfKiW7xfDXeq.MJFhA4l93H538ba', '(48) 99167-1316', '846.326.979-66', '1998-08-23 00:00:00'),
+(6, 'Noah André Silva', 'noah_silva@oi.com.br', '$2y$10$47/lKgwnGYFCQ0DO4M9QiO79e7ih4ZgFVoEmI8Kyk.Tcd1llW.gJa', '(48) 98437-0870', '829.731.669-69', '1998-06-20 00:00:00'),
+(7, 'Kaique Ian Martins', 'kaiquem@gmail.com', '$2y$10$Vob6JYcKqQmzQVFk77BqJOI1aV2j60MN2XOK2dEJixBVMm0RyEyxm', '(48) 98132-0029', '361.239.029.54', '2002-09-16 00:00:00');
 
 INSERT INTO anuncios (id_anuncios, preco_anuncios, km_anuncios, ult_revisao, vendido_anuncios, cidades_id, usuarios_id, modelos_id, versoes_id, cores_id) VALUES
 (1, 59900.00, 54000, 2023, '0', 4209102, 1, 8744, 6053, 4),
@@ -19838,4 +19838,4 @@ INSERT INTO anuncios (id_anuncios, preco_anuncios, km_anuncios, ult_revisao, ven
 (7, 35000.00, 190000, 2023, '0', 4209102, 5, 2465, 12850, 4),
 (8, 30000.00, 26935, 2023, '0', 4211900, 6, 2012, 9447, 4),
 (9, 93900.00, 17000, 2023, '0', 4209102, 7, 10570, 14695, 2),
-(10, 126990.00, 25500, 2023, '0', 4209102, 7, 9151, 12934, 6);
+(10, 126.99, 25500, 2023, '0', 4209102, 7, 9151, 12934, 6);
