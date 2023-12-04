@@ -50,5 +50,6 @@ Após os dados terem sido importados com sucesso, mover a pasta principal do pro
 
 Após a pasta ter sido movida, acessar o SaloneAuto através da URL **"http://localhost/SaloneAuto-main/"**
 
-![image](https://github.com/rodrigodasilv/SaloneAuto/assets/55567123/43249730-55f4-4903-8acd-4afffa75a157)
+![canvas](https://github.com/rodrigodasilv/SaloneAuto/assets/55567123/f892f44e-a5db-4f1e-bb13-0a3b7ab31ca1)
+
 
