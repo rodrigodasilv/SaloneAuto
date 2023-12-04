@@ -59,7 +59,7 @@
         }
         foreach ($anuncios as $anuncio) {
             echo '<div class="card mb-3" style="display: flex; flex-direction:row; text-align:start">';
-            echo '<img class="card-img-top" data-src="holder.js/100px180/" alt="100%x180" style="height: 180px; width: 20%; display: block;" src="./fotos/'. $anuncio['usuarios_id'] . '_' . $anuncio['id_anuncios'] .'.png" data-holder-rendered="true">';
+            echo '<img class="card-img-top" data-src="holder.js/100px180/" alt="100%x180" style="height: 180px; width: 20%; display: block; object-fit: cover;" src="./fotos/'. $anuncio['usuarios_id'] . '_' . $anuncio['id_anuncios'] .'.png" data-holder-rendered="true">';
             echo '<div class="card-body">
             <div style="display: flex;">
                     <h5 style="padding-right: 10px;" class="card-title">' . $anuncio['desc_marcas'] . ' ' .  $anuncio['nome_modelos'] .'</h5>
@@ -88,7 +88,7 @@
         }
         foreach ($anuncios as $anuncio) {
             echo '<div class="card mb-3" style="display: flex; flex-direction:row; text-align:start">';
-            echo '<img class="card-img-top" data-src="holder.js/100px180/" alt="100%x180" style="height: 180px; width: 20%; display: block;" src="./fotos/'. $anuncio['usuarios_id'] . '_' . $anuncio['id_anuncios'] .'.png" data-holder-rendered="true">';
+            echo '<img class="card-img-top" data-src="holder.js/100px180/" alt="100%x180" style="height: 180px; width: 20%; display: block; object-fit: cover;" src="./fotos/'. $anuncio['usuarios_id'] . '_' . $anuncio['id_anuncios'] .'.png" data-holder-rendered="true">';
             echo '<div class="card-body">
             <div style="display: flex;">
                     <h5 style="padding-right: 10px;" class="card-title">' . $anuncio['desc_marcas'] . ' ' .  $anuncio['nome_modelos'] .'</h5>

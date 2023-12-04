@@ -1,7 +1,7 @@
 <?php
 function criarCard($anuncio){
     echo '<div class="card" style="min-width: 11rem">
-      <img src="./fotos/'. $anuncio['usuarios_id'] . '_' . $anuncio['id_anuncios'] .'.png" class="card-img-top" style="height:8rem" alt="...">
+      <img src="./fotos/'. $anuncio['usuarios_id'] . '_' . $anuncio['id_anuncios'] .'.png" class="card-img-top" style="height:8rem; object-fit: cover;" alt="...">
       <div class="card-body">
         <h5 class="card-title">'. $anuncio['desc_marcas'] . ' ' .  $anuncio['nome_modelos'] .'</h5>
         <p class="card-text">'.$anuncio['desc_versoes'].'</p>
