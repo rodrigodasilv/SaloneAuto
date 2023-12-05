@@ -33,7 +33,7 @@ function criarModal($anuncio){
       
       <div class="row">
         <div class="col-7">
-        <h4 style="color:white; text-align: left !important">Valor: R$'.$anuncio['preco_anuncios'].'</h4>
+        <h4 id="price_modal_'.$anuncio['id_anuncios'].'" style="color:white; text-align: left !important">'.$anuncio['preco_anuncios'].'</h4>
         </div>
         <div class="col-5">
                 <p style="color:white; text-align: left !important">Localização: '.$anuncio['nome_cidades'].'</p>

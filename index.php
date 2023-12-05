@@ -245,6 +245,14 @@
         }
       }
     }
+
+  let elementos = document.querySelectorAll('[id^="price"]');
+  let arrayDeElementos = Array.from(elementos);
+  for (let i = 0; i < arrayDeElementos.length; i++) {
+    let elementoAtual = arrayDeElementos[i];
+    valor = parseFloat(elementoAtual.innerHTML);
+    elementoAtual.innerHTML = valor.toLocaleString("pt-br",{style: "currency", currency: "BRL"});
+  }
   </script>
 </body>
 

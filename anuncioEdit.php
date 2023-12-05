@@ -45,11 +45,31 @@
         <form action="anuncioEditAct.php" method="post" enctype="multipart/form-data">
             <label for="marcaSelect">Selecione a marca do carro</label><br>
             <script>
-                function addMarca(){
-                    location.href = '?marcas_id=' + document.getElementById('marcaSelect').value;
+                function addMarca() {
+                    var lista = document.getElementById('modeloSelect');
+                    var opcoes = lista.options;
+
+                    for (var i = opcoes.length - 1; i >= 0; i--) {
+                        opcoes[i].removeAttribute('hidden');
+                        if (opcoes[i].getAttribute('marca') != document.getElementById('marcaSelect').value) {
+                            opcoes[i].setAttribute('hidden', true);
+                        }
+                    }
                 }
-                function addModelo(){
-                    location.href = '?marcas_id=' + document.getElementById('marcaSelect').value + '&modelos_id=' + document.getElementById('modeloSelect').value;
+
+                function addModelo() {
+                    var lista = document.getElementById('versaoSelect');
+                    var opcoes = lista.options;
+
+                    for (var i = opcoes.length - 1; i >= 0; i--) {
+                        opcoes[i].removeAttribute('hidden');
+                    }
+
+                    for (var i = opcoes.length - 1; i >= 0; i--) {
+                        if (opcoes[i].getAttribute('modelo') != document.getElementById('modeloSelect').value) {
+                            opcoes[i].setAttribute('hidden', true);
+                        }
+                    }
                 }
             </script>
             <select class="form-select" id="marcaSelect" onchange="addMarca()">
@@ -57,8 +77,6 @@
                 include_once('./validation.php');
                 if (isset($_GET['marcas_id'])){
                     $marcaID = $_GET['marcas_id'];
-                }else{
-                    $marcaID = 0;
                 }
                 include_once('./Utilities/database_connection.php');
                 $query = "select * from anuncios a join versoes v on v.id_versoes = a.versoes_id join modelos m on a.modelos_id = m.id_modelos
@@ -67,13 +85,13 @@
                 $stm_sql = $banco->prepare($query);
                 $stm_sql->execute();
                 $anuncio = $stm_sql->fetch(PDO::FETCH_ASSOC);
-                if($marcaID==0 && isset($anuncio['marcas_id'])){
+                if(isset($anuncio['marcas_id'])){
                     $marcaID = $anuncio['marcas_id'];
                 }
 
-                $query = "SELECT * FROM marcas m where (". $marcaID ." = 0) or (m.id_marcas=". $marcaID .")
+                $query = "SELECT * FROM marcas m where m.id_marcas=". $marcaID ."
                           union
-                          SELECT * from marcas m where (". $marcaID ." <> 0) or (m.id_marcas<>". $marcaID .")";
+                          SELECT * from marcas m where m.id_marcas<>". $marcaID;
                 $stm_sql = $banco->prepare($query);
                 var_dump($query);
                 $stm_sql->execute();
@@ -87,34 +105,31 @@
             <label for="modeloSelect">Selecione o modelo do carro</label><br>
             <select class="form-select" id="modeloSelect" name="modelo" onchange="addModelo()">
                 <?php
-                if (isset($_GET['modelos_id'])){
-                    $modeloID = $_GET['modelos_id'];
-                }else{
-                    $modeloID = 0;
-                }
-                if($modeloID==0 && isset($anuncio['modelos_id'])){
+                if (isset($anuncio['modelos_id'])){
                     $modeloID = $anuncio['modelos_id'];
                 }
-                $query = "SELECT * FROM modelos m where (". $marcaID ." = 0) or (m.marcas_id=". $marcaID .") and (". $modeloID ." = 0) or (m.id_modelos=". $modeloID .")
+                $query = "SELECT * FROM modelos m where m.id_modelos=". $modeloID ."
                           union
-                          SELECT * FROM modelos m where (". $marcaID ." <> 0) or (m.marcas_id<>". $marcaID .") and (". $modeloID ." <> 0) or (m.id_modelos<>". $modeloID .")";
+                          SELECT * FROM modelos m where m.id_modelos<>". $modeloID;
                 $stm_sql = $banco->prepare($query);
                 $stm_sql->execute();
                 $modelos = $stm_sql->fetchAll(PDO::FETCH_ASSOC);
                 foreach ($modelos as $modelo) {
-                    echo '<option value="' . $modelo['id_modelos'] . '">' . $modelo['nome_modelos'] . '</option>';
+                    echo '<option marca="' . $modelo['marcas_id'] . '" value="' . $modelo['id_modelos'] . '">' . $modelo['nome_modelos'] . '</option>';
                 }
                 ?>
             </select>
             <label for="versaoSelect">Selecione a versão do carro</label><br>
             <select class="form-select" id="versaoSelect" name="versao">
             <?php
-                $query = "SELECT * FROM versoes v where (". $modeloID ." = 0) or (v.modelos_id=". $modeloID .")";
+                $query = "SELECT * FROM versoes v where v.modelos_id=". $modeloID ."
+                          union
+                          SELECT * FROM versoes v where v.modelos_id<>". $modeloID;
                 $stm_sql = $banco->prepare($query);
                 $stm_sql->execute();
                 $versoes = $stm_sql->fetchAll(PDO::FETCH_ASSOC);
                 foreach ($versoes as $versao) {
-                    echo '<option value="' . $versao['id_versoes'] . '">' . $versao['desc_versoes'] . '</option>';
+                    echo '<option modelo="' . $versao['modelos_id'] . '" value="' . $versao['id_versoes'] . '">' . $versao['desc_versoes'] . '</option>';
                 }
                 ?>
             </select>
@@ -122,9 +137,9 @@
             <br />
             <select class="form-select" id="corSelect" name="cor">
                 <?php
-                $query = "SELECT * FROM cores c where (". $anuncio['cores_id'] ." = 0) or (c.id_cores=". $anuncio['cores_id'] .")
+                $query = "SELECT * FROM cores c where c.id_cores=". $anuncio['cores_id'] ."
                 union
-                SELECT * FROM cores c where (". $anuncio['cores_id'] ." <> 0) or (c.id_cores<>". $anuncio['cores_id'] .")";
+                SELECT * FROM cores c where c.id_cores<>". $anuncio['cores_id'];
                 $stm_sql = $banco->prepare($query);
                 $stm_sql->execute();
                 $cores = $stm_sql->fetchAll(PDO::FETCH_ASSOC);
@@ -137,9 +152,9 @@
             <br />
             <select class="form-select" name="localizacao" id="localizacao">
                 <?php
-                $query = "SELECT * FROM cidades c where (". $anuncio['cidades_id'] ." = 0) or (c.id_cidades=". $anuncio['cidades_id'] .")
+                $query = "SELECT * FROM cidades c where c.id_cidades=". $anuncio['cidades_id'] ."
                 union
-                SELECT * FROM cidades c where (". $anuncio['cidades_id'] ." <> 0) or (c.id_cidades<>". $anuncio['cidades_id'] .")";
+                SELECT * FROM cidades c where c.id_cidades<>". $anuncio['cidades_id'];
                 $stm_sql = $banco->prepare($query);
                 $stm_sql->execute();
                 $cidades = $stm_sql->fetchAll(PDO::FETCH_ASSOC);
